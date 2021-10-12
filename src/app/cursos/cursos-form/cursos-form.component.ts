@@ -66,20 +66,58 @@ export class CursosFormComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     console.log(this.form.value);
+
     if(this.form.valid) {
-      this.cursosService.create(this.form.value).subscribe(
+
+      let msgSuccess = 'Curso criado com sucesso!'
+      let msgError = 'Erro ao criar curso!'
+
+      if(this.form.value.id) {
+        msgSuccess = 'Curso atualizado com sucesso!';
+        msgError = 'Erro ao atualizar curso!'
+      }
+
+      this.cursosService.save(this.form.value).subscribe(
         success => {
-          console.log('Sucesso');
-          this.alertModalService.showAlertSuccess('Curso criado com sucesso');
+          this.alertModalService.showAlertSuccess(msgSuccess);
           this.location.back();
         },
         error => {
-          console.log(error);
-          this.alertModalService.showAlertDanger('Erro ao criar curso')
-        },
-        () => console.log('Request completo')
+          this.alertModalService.showAlertDanger(msgError)
+        }
       );
-      console.log('submit');
+
+      /* if(this.form.value.id) {
+        // update
+        this.cursosService.update(this.form.value).subscribe(
+          success => {
+            console.log('Sucesso');
+            this.alertModalService.showAlertSuccess('Curso atualizado com sucesso');
+            this.location.back();
+          },
+          error => {
+            console.log(error);
+            this.alertModalService.showAlertDanger('Erro ao atualizar curso')
+          },
+          () => console.log('Update completo')
+        )
+      }
+      else {
+        // create
+        this.cursosService.create(this.form.value).subscribe(
+          success => {
+            console.log('Sucesso');
+            this.alertModalService.showAlertSuccess('Curso criado com sucesso');
+            this.location.back();
+          },
+          error => {
+            console.log(error);
+            this.alertModalService.showAlertDanger('Erro ao criar curso')
+          },
+          () => console.log('Request completo')
+        );
+      } */
+
     }
   }
 
