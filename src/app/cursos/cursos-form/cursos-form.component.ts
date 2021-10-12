@@ -1,7 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { map, switchMap } from 'rxjs/operators';
 import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
+import { Curso } from '../curso';
 import { CursosService } from '../cursos.service';
 
 @Component({
@@ -18,12 +21,39 @@ export class CursosFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cursosService: CursosService,
     private alertModalService: AlertModalService,
-    private location: Location
+    private location: Location,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    /* this.route.params.subscribe(
+      (params: any) => {
+        const id = params['id']
+        console.log('id', id);
+        const curso$ = this.cursosService.loadById(id);
+        curso$.subscribe(curso => {
+          this.updateForm(curso);
+        })
+      }
+    ) */
+
+    this.route.params
+      .pipe(
+        map((params: any) => params['id']),
+        switchMap(id => this.cursosService.loadById(id))
+      )
+      .subscribe(curso => this.updateForm(curso))
+
     this.form = this.formBuilder.group({
+      id: [null],
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]],
+    })
+  }
+
+  updateForm(curso: any) {
+    this.form.patchValue({
+      id: curso.id,
+      nome: curso.nome
     })
   }
 

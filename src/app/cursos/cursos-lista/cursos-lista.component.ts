@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { empty, Observable, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -23,7 +24,9 @@ export class CursosListaComponent implements OnInit {
 
   constructor(
     private cursosService: CursosService,
-    private alertModalService: AlertModalService
+    private alertModalService: AlertModalService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   onRefresh() {
@@ -41,6 +44,10 @@ export class CursosListaComponent implements OnInit {
 
   handleError() {
     this.alertModalService.showAlertDanger('Erro ao carregar cursos, tente novamente mais tarde.')
+  }
+
+  onEdit(id: number) {
+    this.router.navigate(['editar', id], { relativeTo: this.route })
   }
 
   ngOnInit(): void {
