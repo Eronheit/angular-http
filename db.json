@@ -9,32 +9,12 @@
       "id": 2
     },
     {
-      "nome": "Teste 2",
-      "id": 3
-    },
-    {
-      "nome": "Teste 2",
-      "id": 4
-    },
-    {
       "nome": "material",
       "id": 5
     },
     {
       "id": 6,
       "nome": "React"
-    },
-    {
-      "id": 7,
-      "nome": "sera"
-    },
-    {
-      "id": 8,
-      "nome": "mais um"
-    },
-    {
-      "id": 9,
-      "nome": "teste 111"
     }
   ]
 }
