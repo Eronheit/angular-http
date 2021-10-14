@@ -1,4 +1,13 @@
 {
+  "targets": {
+    "angular-http-5c99f": {
+      "hosting": {
+        "request-http": [
+          "angular-http-5c99f"
+        ]
+      }
+    }
+  },
   "projects": {
     "default": "angular-http-5c99f"
   }
